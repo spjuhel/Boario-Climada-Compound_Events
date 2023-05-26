@@ -117,7 +117,7 @@ if snakemake.params.separate:
 else:
     simulate(
         separate=snakemake.params.separate,
-        event_number=snakemake.wildcards.i,
+        event_number=0,
         output_conso=snakemake.output.conso,
         output_prod=snakemake.output.prod,
         rebuild_tau=snakemake.params.rebuild_tau,
