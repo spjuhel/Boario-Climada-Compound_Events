@@ -53,7 +53,7 @@ rule reduce:
     input:
         unpack(all_isolate_events)
     output:
-        prod = "output/separated_production.parquet"
+        prod = "output/separated_production.parquet",
         conso = "output/separated_conso.parquet"
     resources:
         mem_mb=6000
