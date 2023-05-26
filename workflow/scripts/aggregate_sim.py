@@ -53,7 +53,7 @@ def simulate(
                 rebuild_tau=rebuild_tau,
                 rebuilding_factor=1.0,
                 households_impact=[],
-                occurrence=ev[0],  # check this
+                occurrence=ev[0]+1,  # check this
                 duration=duration,
                 event_monetary_factor=1.0,
             )
@@ -68,7 +68,7 @@ def simulate(
                 rebuild_tau=rebuild_tau,
                 rebuilding_factor=1.0,
                 households_impact=[],
-                occurrence=ev[0],  # check this
+                occurrence=ev[0]+1,  # check this
                 duration=duration,
                 event_monetary_factor=1.0,
             )
