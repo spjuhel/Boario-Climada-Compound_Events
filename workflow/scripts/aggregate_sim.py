@@ -74,12 +74,12 @@ def simulate(
             )
             for ev in df_impact.iterrows()
         ]
-        sim.add_events(events_list)
-        sim.loop()
-        aggregated_prod_sim = sim.production_realised.copy()
-        aggregated_prod_sim.to_parquet(output_prod)
 
-    aggregated_conso_sim = sim.final_demand_not_met.copy()
+    sim.add_events(events_list)
+    sim.loop()
+    aggregated_prod_sim = sim.production_realised.copy()
+    aggregated_prod_sim.to_parquet(output_prod)
+    aggregated_conso_sim = sim.final_demand_unmet.copy()
     aggregated_conso_sim.to_parquet(output_conso)
 
 
