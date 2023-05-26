@@ -9,7 +9,7 @@ from snakemake.utils import min_version
 min_version("6.0")
 
 
-configfile: workflow.source_path("config/config.yaml")
+#configfile: workflow.source_path("config/config.yaml")
 
 wildcard_constraints:
     year="\d\d\d\d",
