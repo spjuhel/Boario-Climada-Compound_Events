@@ -8,7 +8,6 @@ import functools
 from snakemake.utils import min_version
 min_version("6.0")
 
-
 #configfile: workflow.source_path("config/config.yaml")
 
 wildcard_constraints:
@@ -16,7 +15,6 @@ wildcard_constraints:
     aggregation="full_exio3compat|74_sectors",
     scope="general|local",
     focus="all_sim|no_absurd",
-
 rule aggreg:
     input:
         df_impact="inputs/df_impact.parquet",
@@ -35,7 +33,7 @@ rule aggreg:
         inv_tau=60,
         psi=0.80,
     conda:
-        "climada_env"
+        "envs/boario.yml"
     resources:
         mem_mb=6000,
         threads=6
@@ -84,7 +82,7 @@ rule isolate_sim:
         inv_tau=60,
         psi=0.80,
     conda:
-        "climada_env"
+        "envs/boario.yml"
     resources:
         mem_mb=6000,
         threads=6

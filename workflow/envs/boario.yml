@@ -1,0 +1,8 @@
+name: boario
+channels:
+  - conda-forge
+dependencies:
+  - pip
+  - git
+  - pip:
+      - "git+https://github.com/spjuhel/BoARIO.git@master-testing#egg=boario"
