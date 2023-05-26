@@ -57,7 +57,7 @@ def simulate(
                 duration=duration,
                 event_monetary_factor=1.0,
             )
-            for ev in df_impact.iloc[[event_number]]
+            for ev in df_impact.iloc[[event_number]].iterrows()
         ]
 
     else:
@@ -72,7 +72,7 @@ def simulate(
                 duration=duration,
                 event_monetary_factor=1.0,
             )
-            for ev in df_impact
+            for ev in df_impact.iterrows()
         ]
         sim.add_events(events_list)
         sim.loop()
