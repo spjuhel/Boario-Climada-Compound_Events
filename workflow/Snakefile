@@ -1,0 +1,92 @@
+# Main entrypoint of the workflow.
+# Please follow the best practices:
+# https://snakemake.readthedocs.io/en/stable/snakefiles/best_practices.html,
+# in particular regarding the standardized folder structure mentioned there.
+
+import functools
+
+from snakemake.utils import min_version
+min_version("6.0")
+
+
+configfile: workflow.source_path("config/config.yaml")
+
+wildcard_constraints:
+    year="\d\d\d\d",
+    aggregation="full_exio3compat|74_sectors",
+    scope="general|local",
+    focus="all_sim|no_absurd",
+
+rule aggreg:
+    input:
+        df_impact="inputs/df_impact.parquet",
+        sectors_df="inputs/sectors_df.parquet",
+        k_vectors="inputs/k_vector.parquet"
+    output:
+        prod="output/aggregated_production.parquet",
+        conso="output/aggregated_conso.parquet"
+    params:
+        separate=False,
+        rebuild_tau=365,
+        duration=3,
+        order_type="alt",
+        alpha_tau=365,
+        main_inv_dur=90,
+        inv_tau=60,
+        psi=0.80,
+    conda:
+        "climada_env"
+    resources:
+        mem_mb=6000,
+        threads=6
+    script:
+        "scripts/aggregate_sim.py"
+
+def all_isolate_events(wildcards):
+    df_impact = pd.read_parquet("inputs/df_impact.parquet")
+    n_events = len(df_impact)
+    prod = expand("output/isolate_production_{i}.parquet", i=range(n_events))
+    conso=expand("output/isolate_conso_{i}.parquet", i=range(n_events))
+    return {"prod":prod,"conso":conso}
+
+rule reduce:
+    input:
+        unpack(all_isolate_events)
+    output:
+        prod = "output/separated_production.parquet"
+        conso = "output/separated_conso.parquet"
+    resources:
+        mem_mb=6000
+    run:
+        indir_prod_df_list = []
+        indir_conso_df_list = []
+        for prod,conso in zip(input.prod,input.conso):
+            indir_prod_df_list.append(prod)
+            indir_conso_df_list.append(conso)
+        functools.reduce(lambda x, y: x.add(y-y.loc[0], fill_value=0), indir_prod_df_list).to_parquet(output.prod)
+        functools.reduce(lambda x, y: x.add(y-y.loc[0], fill_value=0), indir_prod_df_list).to_parquet(output.conso)
+
+rule isolate_sim:
+    input:
+        df_impact="inputs/df_impact.parquet",
+        sectors_df="inputs/sectors_df.parquet",
+        k_vectors="inputs/k_vector.parquet"
+    output:
+        prod="output/aggregated_production_{i}.parquet",
+        conso="output/aggregated_conso_{i}.parquet"
+    params:
+        separate=True,
+        rebuild_tau=365,
+        duration=3,
+        order_type="alt",
+        alpha_tau=365,
+        main_inv_dur=90,
+        inv_tau=60,
+        psi=0.80,
+    conda:
+        "climada_env"
+    resources:
+        mem_mb=6000,
+        threads=6
+    script:
+        "scripts/aggregate_sim.py"
