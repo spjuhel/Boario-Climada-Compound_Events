@@ -18,6 +18,7 @@ wildcard_constraints:
 rule aggreg:
     input:
         df_impact="inputs/df_impact.parquet",
+        mriot = "inputs/mriot.pkl",
         sectors_df="inputs/sectors_df.parquet",
         k_vectors="inputs/k_vector.parquet"
     output:
@@ -67,6 +68,7 @@ rule reduce:
 rule isolate_sim:
     input:
         df_impact="inputs/df_impact.parquet",
+        mriot = "inputs/mriot.pkl",
         sectors_df="inputs/sectors_df.parquet",
         k_vectors="inputs/k_vector.parquet"
     output:
