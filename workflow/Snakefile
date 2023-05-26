@@ -20,7 +20,7 @@ rule aggreg:
         df_impact="inputs/df_impact.parquet",
         mriot = "inputs/mriot.pkl",
         sectors_df="inputs/sectors_df.parquet",
-        k_vectors="inputs/k_vector.parquet"
+        k_vector="inputs/k_vector.parquet"
     output:
         prod="output/aggregated_production.parquet",
         conso="output/aggregated_conso.parquet"
@@ -70,7 +70,7 @@ rule isolate_sim:
         df_impact="inputs/df_impact.parquet",
         mriot = "inputs/mriot.pkl",
         sectors_df="inputs/sectors_df.parquet",
-        k_vectors="inputs/k_vector.parquet"
+        k_vector="inputs/k_vector.parquet"
     output:
         prod="output/aggregated_production_{i}.parquet",
         conso="output/aggregated_conso_{i}.parquet"
