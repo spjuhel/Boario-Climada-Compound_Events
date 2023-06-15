@@ -129,7 +129,7 @@ rule reduce:
             for var in config["variables"]
         }
 
-        for var, group in structured_results:
+        for var, group in structured_results.items():
             functools.reduce(
                 lambda x, y: x.add(y - y.loc[0], fill_value=0), group
             ).to_parquet(
