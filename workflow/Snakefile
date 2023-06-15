@@ -31,6 +31,8 @@ rule get_hazard_dirimpact:
         "logs/get_hazard_dirimpact.log"
     benchmark:
         "benchmarks/get_hazard_dirimpact.csv"
+    resources:
+        mem_mb=10000
     conda:
         "envs/climada_env.yml"
     output:
@@ -51,6 +53,8 @@ checkpoint create_supchain:
         "logs/create_supchain/{mriot_name}.log"
     benchmark:
         "benchmarks/create_supchain/{mriot_name}.csv"
+    resources:
+        mem_mb=6000
     conda:
         "envs/climada_env.yml"
     output:
@@ -81,6 +85,8 @@ rule simulate:
         "logs/simulate/{mriot_name}_{event_id}.log"
     benchmark:
         "benchmarks/simulate/{mriot_name}_{event_id}.csv"
+    resources:
+        mem_mb=6000
     conda:
         "envs/climada_env.yml"
     output:
