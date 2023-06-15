@@ -1,0 +1,15 @@
+Euregio sectors,affected,rebuilding_factor,inventory_size,productive_capital_to_va_ratio,inventory_tau
+Agriculture,True,0.0017,90.0,2.7125,60.0
+Coke_refined_petroleum_nuclear_fuel_and_chemicals_etc,True,0.0,90.0,3.1375,60.0
+Construction,True,0.55,90.0,1.25,60.0
+Distribution,True,0.10500000000000001,90.0,0.725,60.0
+Electrical_and_optical_equipment_and_Transport_equipment,True,0.187,90.0,1.9285714285714286,60.0
+Financial_intermediation,True,0.03,Infinity,5.45,60.0
+Food_beverages_and_tobacco,True,0.0,90.0,1.8999999999999997,60.0
+Hotels_and_restaurant,True,0.0,90.0,1.2,60.0
+Mining_quarrying_and_energy_supply,True,0.0,90.0,3.7764705882352945,60.0
+Non-Market_Service,True,0.0003,Infinity,1.8695652173913044,60.0
+Other_manufacturing,True,0.111,90.0,2.2551724137931037,60.0
+Real_estate_renting_and_busine_activitie,True,0.0,Infinity,4.3625,60.0
+Textiles_and_leather_etc,True,0.015,90.0,1.3999999999999997,60.0
+Transport_storage_and_communication,True,0.0,90.0,2.322222222222222,60.0

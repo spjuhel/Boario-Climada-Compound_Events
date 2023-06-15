@@ -1,0 +1,26 @@
+Eora sectors,affected,rebuilding_factor,inventory_size,productive_capital_to_va_ratio,inventory_tau
+Agriculture,True,0.0017,90.0,2.7043478260869565,60.0
+Construction,False,0.55,90.0,0.5,60.0
+"Education, Health and Other Services",True,0.0,inf,2.0,60.0
+Electrical and Machinery,True,0.135,90.0,1.5,60.0
+"Electricity, Gas and Water",True,0.0,90.0,2.888888888888889,60.0
+Finacial Intermediation and Business Activities,True,0.03,Infinity,4.4714285714285715,60.0
+Fishing,False,0.0,90.0,2.9,60.0
+Food & Beverages,True,0.0,90.0,2.0,60.0
+Hotels and Restraurants,True,0.0,90.0,1.2,60.0
+Maintenance and Repair,True,0.05,90.0,0.5,60.0
+Metal Products,True,0.0,90.0,2.466666666666667,60.0
+Mining and Quarrying,True,0.0,90.0,5.1,60.0
+Other Manufacturing,True,0.063,90.0,2.011764705882353,60.0
+Others,True,0.0,Infinity,1.8666666666666667,60.0
+"Petroleum, Chemical and Non-Metallic Mineral Products",True,0.0,90.0,3.3000000000000003,60.0
+Post and Telecommunications,True,0.0,90.0,3.2,60.0
+Private Households,True,0.0,90.0,1.0,60.0
+Public Administration,True,0.0003,90.0,2.0,60.0
+Recycling,True,0.0,90.0,2.0,60.0
+Retail Trade,True,0.005,90.0,0.9,60.0
+Textiles and Wearing Apparel,True,0.015,90.0,1.4,60.0
+Transport,True,0.0,90.0,2.5,60.0
+Transport Equipment,True,0.05,90.0,3.0,60.0
+Wholesale Trade,True,0.05,90.0,0.6,60.0
+Wood and Paper,True,0.05,90.0,1.6800000000000002,60.0

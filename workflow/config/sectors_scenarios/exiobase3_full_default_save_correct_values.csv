@@ -1,0 +1,164 @@
+,affected,rebuilding_factor,inventory_size,productive_capital_to_va_ratio,inventory_tau
+Construction (45),0,0.55,90,0.5,60
+Manufacture of electrical machinery and apparatus n.e.c. (31),1,0.1,90,1.5,60
+Manufacture of furniture; manufacturing n.e.c. (36),1,0.06,90,3,60
+"Manufacture of wood and of products of wood and cork, except furniture; manufacture of articles of straw and plaiting materials (20)",1,0.05,90,1.4,60
+"Sale, maintenance, repair of motor vehicles, motor vehicles parts, motorcycles, motor cycles parts and accessoiries",1,0.05,90,0.5,60
+"Wholesale trade and commission trade, except of motor vehicles and motorcycles (51)",1,0.05,90,0.6,60
+"Manufacture of motor vehicles, trailers and semi-trailers (34)",1,0.04,90,3,60
+Activities auxiliary to financial intermediation (67),1,0.03,Infinity,5.45,60
+Manufacture of office machinery and computers (30),1,0.025,90,1.5,60
+Manufacture of wearing apparel; dressing and dyeing of fur (18),1,0.015,90,1.4,60
+Manufacture of machinery and equipment n.e.c. (29),1,0.01,90,1.5,60
+Manufacture of other transport equipment (35),1,0.01,90,3,60
+"Retail trade, except of motor vehicles and motorcycles; repair of personal and household goods (52)",1,0.005,90,1.1,60
+"Manufacture of medical, precision and optical instruments, watches and clocks (33)",1,0.002,90,1.5,60
+Manufacture of ceramic goods,1,0.001,90,2,60
+Cattle farming,1,0.0003,90,2.9,60
+Pigs farming,1,0.0003,90,2.9,60
+Poultry farming,1,0.0003,90,2.9,60
+Cultivation of cereal grains nec,1,0.0001,90,2.9,60
+Cultivation of crops nec,1,0.0001,90,2.9,60
+Cultivation of oil seeds,1,0.0001,90,2.9,60
+Cultivation of paddy rice,1,0.0001,90,2.9,60
+Cultivation of plant-based fibers,1,0.0001,90,2.9,60
+"Cultivation of sugar cane, sugar beet",1,0.0001,90,2.9,60
+"Cultivation of vegetables, fruit, nuts",1,0.0001,90,2.9,60
+Cultivation of wheat,1,0.0001,90,2.9,60
+Public administration and defence; compulsory social security (75),1,0.0003,90,2,60
+Air transport (62),0,0,90,3,60
+Aluminium production,1,0,90,3,60
+Animal products nec,1,0,90,2.9,60
+"Biogasification of food waste, incl. land application",1,0,90,2,60
+"Biogasification of paper, incl. land application",1,0,90,2,60
+"Biogasification of sewage slugde, incl. land application",1,0,90,2,60
+Casting of metals,1,0,90,3,60
+Chemicals nec,1,0,90,3,60
+"Collection, purification and distribution of water (41)",1,0,90,3,60
+"Composting of food waste, incl. land application",1,0,90,2,60
+"Composting of paper and wood, incl. land application",1,0,90,2,60
+Computer and related activities (72),1,0,90,4,60
+Copper production,1,0,90,3,60
+Activities of membership organisation n.e.c. (91),1,0,Infinity,1,60
+Extra-territorial organizations and bodies,1,0,Infinity,1,60
+"Financial intermediation, except insurance and pension funding (65)",0,0,Infinity,5.45,60
+"Insurance and pension funding, except compulsory social security (66)",1,0,Infinity,5.45,60
+Real estate activities (70),1,0,Infinity,5.45,60
+"Recreational, cultural and sporting activities (92)",1,0,Infinity,1,60
+Distribution and trade of electricity,1,0,90,2,60
+Education (80),1,0,90,2,60
+"Extraction of crude petroleum and services related to crude oil extraction, excluding surveying",1,0,90,5.1,60
+"Extraction of natural gas and services related to natural gas extraction, excluding surveying",1,0,90,5.1,60
+"Extraction, liquefaction, and regasification of other petroleum and gaseous materials",1,0,90,5.1,60
+"Fishing, operating of fish hatcheries and fish farms; service activities incidental to fishing (05)",0,0,90,2.9,60
+"Forestry, logging and related service activities (02)",0,0,90,2.9,60
+Health and social work (85),1,0,90,2,60
+Hotels and restaurants (55),1,0,90,1.2,60
+Incineration of waste: Food,1,0,90,2,60
+Incineration of waste: Metals and Inert materials,1,0,90,2,60
+Incineration of waste: Oil/Hazardous waste,1,0,90,2,60
+Incineration of waste: Paper,1,0,90,2,60
+Incineration of waste: Plastic,1,0,90,2,60
+Incineration of waste: Textiles,1,0,90,2,60
+Incineration of waste: Wood,1,0,90,2,60
+Inland water transport,1,0,90,2.5,60
+Landfill of waste: Food,1,0,90,2,60
+Landfill of waste: Inert/metal/hazardous,1,0,90,2,60
+Landfill of waste: Paper,1,0,90,2,60
+Landfill of waste: Plastic,1,0,90,2,60
+Landfill of waste: Textiles,1,0,90,2,60
+Landfill of waste: Wood,1,0,90,2,60
+"Lead, zinc and tin production",1,0,90,3,60
+Manufacture of basic iron and steel and of ferro-alloys and first products thereof,1,0,90,3,60
+Manufacture of beverages,1,0,90,1.4,60
+"Manufacture of bricks, tiles and construction products, in baked clay",1,0,90,2,60
+"Manufacture of cement, lime and plaster",1,0,90,2,60
+Manufacture of coke oven products,1,0,90,3,60
+"Manufacture of fabricated metal products, except machinery and equipment (28)",1,0,90,2,60
+Manufacture of fish products,1,0,90,1.4,60
+Manufacture of gas; distribution of gaseous fuels through mains,1,0,90,3,60
+Manufacture of glass and glass products,1,0,90,2,60
+Manufacture of other non-metallic mineral products n.e.c.,1,0,90,2,60
+"Manufacture of radio, television and communication equipment and apparatus (32)",1,0,90,1.5,60
+Manufacture of rubber and plastic products (25),1,0,90,2,60
+Manufacture of textiles (17),1,0,90,1.4,60
+Manufacture of tobacco products (16),1,0,90,1.4,60
+"Manure treatment (biogas), storage and land application",1,0,90,2.9,60
+"Manure treatment (conventional), storage and land application",1,0,90,2.9,60
+Meat animals nec,1,0,90,2.9,60
+Mining of aluminium ores and concentrates,1,0,90,5.1,60
+"Mining of chemical and fertilizer minerals, production of salt, other mining and quarrying n.e.c.",1,0,90,5.1,60
+Mining of coal and lignite; extraction of peat (10),1,0,90,5.1,60
+Mining of copper ores and concentrates,1,0,90,5.1,60
+Mining of iron ores,1,0,90,5.1,60
+"Mining of lead, zinc and tin ores and concentrates",1,0,90,5.1,60
+Mining of nickel ores and concentrates,1,0,90,5.1,60
+Mining of other non-ferrous metal ores and concentrates,1,0,90,5.1,60
+Mining of precious metal ores and concentrates,1,0,90,5.1,60
+Mining of uranium and thorium ores (12),1,0,90,5.1,60
+N-fertiliser,1,0,90,3,60
+Other business activities (74),1,0,90,4,60
+Other land transport,1,0,90,2.5,60
+Other non-ferrous metal production,1,0,90,3,60
+Other service activities (93),1,0,90,1,60
+P- and other fertiliser,1,0,90,3,60
+Paper,1,0,90,1.5,60
+Petroleum Refinery,1,0,90,3,60
+"Plastics, basic",1,0,90,3,60
+Post and telecommunications (64),1,0,90,2.4,60
+Precious metals production,1,0,90,3,60
+Private households with employed persons (95),1,0,90,1,60
+Processed rice,1,0,90,1.4,60
+Processing of dairy products,1,0,90,2.9,60
+Processing of Food products nec,1,0,90,1.4,60
+Processing of meat cattle,1,0,90,2.9,60
+Processing of meat pigs,1,0,90,2.9,60
+Processing of meat poultry,1,0,90,2.9,60
+Processing of nuclear fuel,1,0,90,3,60
+Processing vegetable oils and fats,1,0,90,1.4,60
+Production of electricity by biomass and waste,1,0,90,3,60
+Production of electricity by coal,1,0,90,3,60
+Production of electricity by gas,1,0,90,3,60
+Production of electricity by Geothermal,1,0,90,3,60
+Production of electricity by hydro,1,0,90,3,60
+Production of electricity by nuclear,1,0,90,3,60
+Production of electricity by petroleum and other oil derivatives,1,0,90,3,60
+Production of electricity by solar photovoltaic,1,0,90,3,60
+Production of electricity by solar thermal,1,0,90,3,60
+"Production of electricity by tide, wave, ocean",1,0,90,3,60
+Production of electricity by wind,1,0,90,3,60
+Production of electricity nec,1,0,90,3,60
+Production of meat products nec,1,0,90,1.4,60
+"Publishing, printing and reproduction of recorded media (22)",1,0,90,2,60
+Pulp,1,0,90,1.5,60
+Quarrying of sand and clay,1,0,90,5.1,60
+Quarrying of stone,1,0,90,5.1,60
+Raw milk,1,0,90,2.9,60
+Re-processing of ash into clinker,1,0,90,2,60
+Re-processing of secondary aluminium into new aluminium,1,0,90,2,60
+Re-processing of secondary construction material into aggregates,1,0,90,2,60
+Re-processing of secondary copper into new copper,1,0,90,2,60
+Re-processing of secondary glass into new glass,1,0,90,2,60
+"Re-processing of secondary lead into new lead, zinc and tin",1,0,90,2,60
+Re-processing of secondary other non-ferrous metals into new other non-ferrous metals,1,0,90,2,60
+Re-processing of secondary paper into new pulp,1,0,90,2,60
+Re-processing of secondary plastic into new plastic,1,0,90,2,60
+Re-processing of secondary preciuos metals into new preciuos metals,1,0,90,2,60
+Re-processing of secondary steel into new steel,1,0,90,2,60
+Re-processing of secondary wood material into new wood material,1,0,90,2,60
+Recycling of bottles by direct reuse,1,0,90,2,60
+Recycling of waste and scrap,1,0,90,2,60
+Renting of machinery and equipment without operator and of personal and household goods (71),1,0,90,4,60
+Research and development (73),1,0,90,4,60
+Retail sale of automotive fuel,1,0,90,0.7,60
+Sea and coastal water transport,0,0,90,1.5,60
+Steam and hot water supply,1,0,90,3,60
+Sugar refining,1,0,90,1.4,60
+Supporting and auxiliary transport activities; activities of travel agencies (63),1,0,90,1.5,60
+"Tanning and dressing of leather; manufacture of luggage, handbags, saddlery, harness and footwear (19)",1,0,90,1.4,60
+Transmission of electricity,1,0,90,2,60
+Transport via pipelines,0,0,90,2.5,60
+Transport via railways,1,0,90,3,60
+"Waste water treatment, food",1,0,90,3,60
+"Waste water treatment, other",1,0,90,3,60
+"Wool, silk-worm cocoons",1,0,90,2.9,60

@@ -1,0 +1,3 @@
+variables:
+  - production_realised
+  - final_demand_unmet
