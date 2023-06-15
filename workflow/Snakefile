@@ -125,7 +125,7 @@ rule reduce:
         "benchmarks/reduce/{mriot_name}.log"
     run:
         structured_results = {
-            var: [isolate for isolate in snakemake.input if var in isolate]
+            var: [isolate for isolate in input if var in isolate]
             for var in config["variables"]
         }
 
