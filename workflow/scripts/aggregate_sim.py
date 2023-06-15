@@ -1,11 +1,8 @@
 import pickle as pkl
-
 import pandas as pd
-
 from boario.extended_models import ARIOPsiModel
 from boario.event import *
 from boario.simulation import Simulation
-
 
 def simulate(
     separate,

@@ -8,11 +8,6 @@ import pathlib
 from functools import reduce
 from datetime import datetime
 
-
-
-save_path = pathlib.Path("../../results")
-
-
 def get_impf_id(cnt):
     for basin, iso_list in ImpfSetTropCyclone.get_countries_per_region()[2].items():
         for iso in iso_list:
@@ -26,7 +21,7 @@ if __name__ == "main":
     tc_wp_1 = client.get_hazard('tropical_cyclone', name='tropical_cyclone_0synth_tracks_150arcsec_genesis_WP_1980_2020')
     tc_na = client.get_hazard('tropical_cyclone', name='tropical_cyclone_0synth_tracks_150arcsec_genesis_NA_1980_2020')
 
-    tc_wp = Hazard.concat([tc_wp,tc_na])
+    tc_wp = Hazard.concat([tc_wp_1,tc_na])
 
     assets = client.get_litpop()
 
