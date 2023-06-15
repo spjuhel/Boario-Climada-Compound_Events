@@ -100,7 +100,7 @@ rule simulate:
 
 
 def all_isolate_events(wildcards):
-    df_impact = pd.read_parquet(checkpoints.create_supchain.get(**wildcards).output.df_impact)
+    df_impact = pd.read_parquet(checkpoints.create_supchain.get(**wildcards).output.df_impact).reset_index()
     return (
         expand(
             "outputs/simulations/{{mriot_name}}_event_{event_id}/{variable}.parquet",

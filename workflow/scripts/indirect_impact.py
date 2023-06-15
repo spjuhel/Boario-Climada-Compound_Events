@@ -55,14 +55,15 @@ def simulate(
     )
 
     if event_id:
+        impact_row = df_impact.iloc[event_id]
         events_list = [
             EventKapitalRebuild.from_series(
-                impact=df_impact.loc[event_id],
+                impact=impact_row,
                 rebuilding_sectors=reb_sect,
                 rebuild_tau=rebuild_tau,
                 rebuilding_factor=1.0,
                 households_impact=[],
-                occurrence=event_id+1,
+                occurrence=impact_row.name+1,
                 duration=duration,
                 # TODO: it is assumed that exposure/impacts are expressed with full
                 # values, deal with cases where CLIMADA exposure is expressed in K,
@@ -89,7 +90,7 @@ def simulate(
         ]
 
     sim.add_events(events_list)
-    sim.loop()
+    sim.loop(progress=False)
     for var_name in vars_to_save:
         var_value = getattr(sim, var_name)
         var_value.to_parquet(pathlib.Path(output) / f"{var_name}.parquet")

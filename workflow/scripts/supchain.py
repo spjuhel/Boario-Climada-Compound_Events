@@ -76,7 +76,7 @@ supchain.calc_shock_to_sectors(assets, direct_impact, impacted_secs)
 df_impact = pd.DataFrame(
         supchain.secs_imp.values,
         columns=supchain.secs_imp.columns,
-        index=supchain.events_date,
+    index = supchain.events_date
     )
 df_impact.index = df_impact.index - df_impact.index.min()
 
