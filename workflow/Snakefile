@@ -41,25 +41,42 @@ rule get_hazard_dirimpact:
     script:
         "scripts/hazard.py"
 
+rule impact_csv_csr_to_pkl:
+    input:
+        csv = "inputs/sample_{n}_5y_impact_na_wp.csv"
+        npz = "inputs/sample_{n}_5y_impact_na_wp.npz"
+    output:
+        pkl = "outputs/sample_{n}_5y_impact_na_wp.pkl"
+    log:
+        "logs/yearsets_impacts_to_pkl.log"
+    benchmark:
+        "benchmarks/yearsets_impacts_to_pkl.csv"
+    resources:
+        mem_mb= 10000
+    conda:
+        "envs/climada_env.yml"
+    script:
+        "scripts/yearset_to_pkl.py"
+
 checkpoint create_supchain:
     input:
-        impact_file="outputs/direct_impact.pkl",
+        impact_file="outputs/sample_{n}/direct_impact.pkl",
         mriot_file="inputs/{mriot_name}/mriot_original.pkl",
         assets="outputs/assets.pkl",
     params:
         sector_common_aggreg="inputs/sectors_common_aggreg.ods",
         direct_dmg_floor=1e8,
     log:
-        "logs/create_supchain/{mriot_name}.log"
+        "logs/create_supchain/{n}_{mriot_name}.log"
     benchmark:
-        "benchmarks/create_supchain/{mriot_name}.csv"
+        "benchmarks/create_supchain/{n}_{mriot_name}.csv"
     resources:
         mem_mb=6000
     conda:
         "envs/climada_env.yml"
     output:
-        save_path="outputs/{mriot_name}_supchain.pkl",
-        df_impact="outputs/{mriot_name}_df_impact.parquet",
+        save_path="outputs/sample_{n}/{mriot_name}_supchain.pkl",
+        df_impact="outputs/sample_{n}/{mriot_name}_df_impact.parquet",
         mriot_save="outputs/{mriot_name}.pkl"
     script:
         "scripts/supchain.py"
@@ -67,10 +84,10 @@ checkpoint create_supchain:
 
 rule simulate:
     input:
-        supchain="outputs/{mriot_name}_supchain.pkl",
+        supchain="outputs/sample_{n}/{mriot_name}_supchain.pkl",
         mriot_file="outputs/{mriot_name}.pkl",
         sectors_df="inputs/sectors_df.parquet",
-        df_impact="outputs/{mriot_name}_df_impact.parquet"
+        df_impact="outputs/sample_{n}/{mriot_name}_df_impact.parquet"
     params:
         rebuild_tau=365,
         duration=3,
@@ -82,17 +99,17 @@ rule simulate:
     wildcard_constraints:
         event_id="aggregated|\d+"
     log:
-        "logs/simulate/{mriot_name}_{event_id}.log"
+        "logs/simulate/{n}_{mriot_name}_{event_id}.log"
     benchmark:
-        "benchmarks/simulate/{mriot_name}_{event_id}.csv"
+        "benchmarks/simulate/{n}_{mriot_name}_{event_id}.csv"
     resources:
         mem_mb=6000
     conda:
         "envs/climada_env.yml"
     output:
-        path=directory("outputs/simulations/{mriot_name}_event_{event_id}"),
+        path=directory("outputs/simulations/sample_{n}/{mriot_name}_event_{event_id}"),
         results=expand(
-            "outputs/simulations/{{mriot_name}}_event_{{event_id}}/{variable}.parquet",
+            "outputs/simulations/sample_{{n}}/{{mriot_name}}_event_{{event_id}}/{variable}.parquet",
             variable=config["variables"],
         ),
     script:
@@ -103,7 +120,7 @@ def all_isolate_events(wildcards):
     df_impact = pd.read_parquet(checkpoints.create_supchain.get(**wildcards).output.df_impact).reset_index()
     return (
         expand(
-            "outputs/simulations/{{mriot_name}}_event_{event_id}/{variable}.parquet",
+            "outputs/simulations/sample_{n}/{{mriot_name}}_event_{event_id}/{variable}.parquet",
             variable=config["variables"],
             event_id=df_impact.index,
         )
@@ -114,20 +131,20 @@ rule reduce:
         all_isolate_events
     output:
         expand(
-            "outputs/simulations/{{mriot_name}}_event_separated/{variable}.parquet",
+            "outputs/simulations/sample_{n}/{{mriot_name}}_event_separated/{variable}.parquet",
             variable=config["variables"],
         ),
     resources:
         mem_mb=6000,
     log:
-        "logs/reduce/{mriot_name}.log"
+        "logs/reduce/{n}_{mriot_name}.log"
     benchmark:
-        "benchmarks/reduce/{mriot_name}.log"
+        "benchmarks/reduce/{n}_{mriot_name}.log"
     run:
         structured_results = { var: [pd.read_parquet(isolate) for isolate in input if var in isolate] for var in config["variables"] }
         for var, group in structured_results.items():
             functools.reduce(
                 lambda x, y: x.add(y - y.loc[0], fill_value=0), group
             ).to_parquet(
-                f"outputs/simulations/{wildcards.mriot_name}_event_separated/{var}.parquet"
+                f"outputs/simulations/{wildcards.n}/{wildcards.mriot_name}_event_separated/{var}.parquet"
             )
