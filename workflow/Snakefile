@@ -48,9 +48,9 @@ rule impact_csv_csr_to_pkl:
     output:
         pkl = "outputs/sample_{n}_5y_impact_na_wp.pkl"
     log:
-        "logs/yearsets_impacts_to_pkl.log"
+        "logs/yearsets_{n}_impacts_to_pkl.log"
     benchmark:
-        "benchmarks/yearsets_impacts_to_pkl.csv"
+        "benchmarks/yearsets_{n}_impacts_to_pkl.csv"
     resources:
         mem_mb= 10000
     conda:
