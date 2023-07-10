@@ -17,41 +17,41 @@ wildcard_constraints:
     n="\d+",
     mriot_name="EXIOBASE3-2010"
 
-rule get_hazard_dirimpact:
-    params:
-        hazfiles=[
-            (
-                "tropical_cyclone",
-                "tropical_cyclone_0synth_tracks_150arcsec_genesis_WP_1980_2020",
-            ),
-            (
-                "tropical_cyclone",
-                "tropical_cyclone_0synth_tracks_150arcsec_genesis_NA_1980_2020",
-            ),
-        ],
-        year_start=2012,
-        year_end=2017,
-    log:
-        "logs/get_hazard_dirimpact.log"
-    benchmark:
-        "benchmarks/get_hazard_dirimpact.csv"
-    resources:
-        mem_mb=10000
-    conda:
-        "envs/climada_env.yml"
-    output:
-        save_path="outputs/direct_impact.pkl",
-        assets="outputs/assets.pkl"
-    script:
-        "scripts/hazard.py"
+# rule get_hazard_dirimpact:
+#     params:
+#         hazfiles=[
+#             (
+#                 "tropical_cyclone",
+#                 "tropical_cyclone_0synth_tracks_150arcsec_genesis_WP_1980_2020",
+#             ),
+#             (
+#                 "tropical_cyclone",
+#                 "tropical_cyclone_0synth_tracks_150arcsec_genesis_NA_1980_2020",
+#             ),
+#         ],
+#         year_start=2012,
+#         year_end=2017,
+#     log:
+#         "logs/get_hazard_dirimpact.log"
+#     benchmark:
+#         "benchmarks/get_hazard_dirimpact.csv"
+#     resources:
+#         mem_mb=10000
+#     conda:
+#         "envs/climada_env.yml"
+#     output:
+#         save_path="outputs/direct_impact.pkl",
+#         assets="outputs/assets.pkl"
+#     script:
+#         "scripts/hazard.py"
 
 rule impact_csv_csr_to_pkl:
     input:
-        csv = "inputs/sample_{n}_5y_impact_na_wp.csv",
-        npz = "inputs/sample_{n}_5y_impact_na_wp.npz"
+        csv = "inputs/direct_impacts_yearsets/sample_{n}_5y_impact_na_wp.csv",
+        npz = "inputs/direct_impacts_yearsets/sample_{n}_5y_impact_na_wp.npz",
+        assets = "outputs/assets.pkl"
     output:
         pkl = "outputs/sample_{n}/direct_impact.pkl",
-        assets = "outputs/sample_{n}/assets.pkl"
     log:
         "logs/yearsets_{n}_impacts_to_pkl.log"
     benchmark:
@@ -67,7 +67,7 @@ checkpoint create_supchain:
     input:
         impact_file="outputs/sample_{n}/direct_impact.pkl",
         mriot_file="inputs/{mriot_name}/mriot_original.pkl",
-        assets="outputs/sample_{n}/assets.pkl",
+        assets="outputs/assets.pkl",
     params:
         sector_common_aggreg="inputs/sectors_common_aggreg.ods",
         direct_dmg_floor=1e8,
