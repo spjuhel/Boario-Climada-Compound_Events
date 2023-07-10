@@ -123,7 +123,7 @@ def all_isolate_events(wildcards):
     df_impact = pd.read_parquet(checkpoints.create_supchain.get(**wildcards).output.df_impact).reset_index()
     return (
         expand(
-            "outputs/simulations/sample_{n}/{{mriot_name}}_event_{event_id}/{variable}.parquet",
+            "outputs/simulations/sample_{{n}}/{{mriot_name}}_event_{event_id}/{variable}.parquet",
             variable=config["variables"],
             event_id=df_impact.index,
         )
