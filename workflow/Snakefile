@@ -14,7 +14,8 @@ min_version("6.0")
 configfile: workflow.source_path("config/config.yaml")
 
 wildcard_constraints:
-    n="\d+"
+    n="\d+",
+    mriot_name="EXIOBASE3-2010"
 
 rule get_hazard_dirimpact:
     params:
