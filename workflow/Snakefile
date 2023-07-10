@@ -50,7 +50,7 @@ rule impact_csv_csr_to_pkl:
         csv = "inputs/sample_{n}_5y_impact_na_wp.csv",
         npz = "inputs/sample_{n}_5y_impact_na_wp.npz"
     output:
-        pkl = "outputs/sample_{n}_5y_impact_na_wp.pkl"
+        pkl = "outputs/sample_{n}/direct_impact.pkl"
     log:
         "logs/yearsets_{n}_impacts_to_pkl.log"
     benchmark:
