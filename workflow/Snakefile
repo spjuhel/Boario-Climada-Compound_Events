@@ -131,7 +131,7 @@ rule reduce:
         all_isolate_events
     output:
         expand(
-            "outputs/simulations/sample_{n}/{{mriot_name}}_event_separated/{variable}.parquet",
+            "outputs/simulations/sample_{{n}}/{{mriot_name}}_event_separated/{variable}.parquet",
             variable=config["variables"],
         ),
     resources:
