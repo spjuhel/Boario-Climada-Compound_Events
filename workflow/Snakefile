@@ -43,7 +43,7 @@ rule get_hazard_dirimpact:
 
 rule impact_csv_csr_to_pkl:
     input:
-        csv = "inputs/sample_{n}_5y_impact_na_wp.csv"
+        csv = "inputs/sample_{n}_5y_impact_na_wp.csv",
         npz = "inputs/sample_{n}_5y_impact_na_wp.npz"
     output:
         pkl = "outputs/sample_{n}_5y_impact_na_wp.pkl"
