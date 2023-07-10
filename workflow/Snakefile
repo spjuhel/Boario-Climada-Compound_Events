@@ -77,7 +77,7 @@ checkpoint create_supchain:
     output:
         save_path="outputs/sample_{n}/{mriot_name}_supchain.pkl",
         df_impact="outputs/sample_{n}/{mriot_name}_df_impact.parquet",
-        mriot_save="outputs/{mriot_name}.pkl"
+        mriot_save="outputs/sample_{n}/{mriot_name}.pkl"
     script:
         "scripts/supchain.py"
 
@@ -85,7 +85,7 @@ checkpoint create_supchain:
 rule simulate:
     input:
         supchain="outputs/sample_{n}/{mriot_name}_supchain.pkl",
-        mriot_file="outputs/{mriot_name}.pkl",
+        mriot_file="outputs/sample_{n}/{mriot_name}.pkl",
         sectors_df="inputs/sectors_df.parquet",
         df_impact="outputs/sample_{n}/{mriot_name}_df_impact.parquet"
     params:
