@@ -50,7 +50,8 @@ rule impact_csv_csr_to_pkl:
         csv = "inputs/sample_{n}_5y_impact_na_wp.csv",
         npz = "inputs/sample_{n}_5y_impact_na_wp.npz"
     output:
-        pkl = "outputs/sample_{n}/direct_impact.pkl"
+        pkl = "outputs/sample_{n}/direct_impact.pkl",
+        assets = "outputs/sample_{n}/assets.pkl"
     log:
         "logs/yearsets_{n}_impacts_to_pkl.log"
     benchmark:
@@ -66,7 +67,7 @@ checkpoint create_supchain:
     input:
         impact_file="outputs/sample_{n}/direct_impact.pkl",
         mriot_file="inputs/{mriot_name}/mriot_original.pkl",
-        assets="outputs/assets.pkl",
+        assets="outputs/sample_{n}/assets.pkl",
     params:
         sector_common_aggreg="inputs/sectors_common_aggreg.ods",
         direct_dmg_floor=1e8,
