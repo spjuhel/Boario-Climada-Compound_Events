@@ -50,7 +50,7 @@ def simulate(
     sim = Simulation(
         model,
         register_stocks=False,
-        n_temporal_units_to_sim=df_impact.index.max() + 365,
+        n_temporal_units_to_sim=int(df_impact.index.max()) + 365,
         separate_sims=False,
     )
 
