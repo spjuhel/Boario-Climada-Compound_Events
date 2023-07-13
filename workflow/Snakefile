@@ -151,12 +151,12 @@ rule reduce:
             functools.reduce(
                 lambda x, y: x.add(y - y.loc[0], fill_value=0), group
             ).to_parquet(
-                f"outputs/simulations/{wildcards.n}/{wildcards.mriot_name}_event_separated/{var}.parquet"
+                f"outputs/simulations/sample_{wildcards.n}/{wildcards.mriot_name}_event_separated/{var}.parquet"
             )
 
 def get_all_results(wildcards):
     n_samples = glob_wildcards(f"inputs/direct_impacts_yearsets/sample_{{n}}_5y_impact_na_wp.csv").n
-    return expand("outputs/simulations/{n}/{mriot}_event_{evtype}/{var}.parquet", n=n_samples, mriot="EXIOBASE3-2010", evtype=["aggregated","separated"], var=config["variables"])
+    return expand("outputs/simulations/sample_{n}/{mriot}_event_{evtype}/{var}.parquet", n=n_samples, mriot="EXIOBASE3-2010", evtype=["aggregated","separated"], var=config["variables"])
 
 rule all_results:
     input:
