@@ -57,6 +57,7 @@ def simulate(
     duration,
     output,
     vars_to_save,
+    step_to_eq,
     event_id=None,
 ):
     model = ARIOPsiModel(
@@ -75,7 +76,7 @@ def simulate(
     sim = Simulation(
         model,
         register_stocks=False,
-        n_temporal_units_to_sim=int(df_impact.index.max()) + 1095,
+        n_temporal_units_to_sim=int(df_impact.index.max()) + step_to_eq,
         separate_sims=False,
     )
 
@@ -152,6 +153,7 @@ simulate(
     df_impact=df_impact,
     reb_sect=reb_sect,
     output=snakemake.output.path,
+    step_to_eq=snakemake.config["step_to_eq"],
     event_id=event_id,
     vars_to_save=snakemake.config["variables"]
 )

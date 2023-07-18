@@ -86,7 +86,6 @@ checkpoint create_supchain:
     script:
         "scripts/supchain.py"
 
-
 rule simulate:
     input:
         supchain="outputs/sample_{n}/{mriot_name}_supchain.pkl",
@@ -158,6 +157,25 @@ def get_all_results(wildcards):
     n_samples = glob_wildcards(f"inputs/direct_impacts_yearsets/sample_{{n}}_5y_impact_na_wp.csv").n
     return expand("outputs/simulations/sample_{n}/{mriot}_event_{evtype}/{var}.parquet", n=n_samples, mriot="EXIOBASE3-2010", evtype=["aggregated","separated"], var=config["variables"])
 
+def get_all_impacts_df(wildcards):
+    n_samples = glob_wildcards(f"inputs/direct_impacts_yearsets/sample_{{n}}_5y_impact_na_wp.csv").n
+    return expand("outputs/sample_{n}/{mriot}_df_impact.parquet", n=n_samples, mriot="EXIOBASE3-2010")
+
 rule all_results:
     input:
         get_all_results
+
+rule meta_df:
+    input:
+        results=get_all_results,
+        impacts=get_all_impacts_df
+    output:
+        meta_results="outputs/results_meta_df.parquet"
+    resources:
+        mem_mb=6000,
+    log:
+        "logs/meta_df.log"
+    benchmark:
+        "benchmarks/meta_df.csv"
+    script:
+        "scripts/meta_df_building.py"
