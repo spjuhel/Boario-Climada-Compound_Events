@@ -113,7 +113,7 @@ rule simulate:
     output:
         path=directory("outputs/simulations/sample_{n}/{mriot_name}_{inv_sce}_event_{event_id}"),
         results=expand(
-            "outputs/simulations/sample_{{n}}/{{mriot_name}}_{inv_sce}_event_{{event_id}}/{variable}.parquet",
+            "outputs/simulations/sample_{{n}}/{{mriot_name}}_{{inv_sce}}_event_{{event_id}}/{variable}.parquet",
             variable=config["variables"],
         ),
     script:
