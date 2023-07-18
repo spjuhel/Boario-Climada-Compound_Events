@@ -1,3 +1,4 @@
+import sys
 import logging
 import pathlib
 import pandas as pd
@@ -5,15 +6,39 @@ import pickle as pkl
 from boario.extended_models import ARIOPsiModel
 from boario.event import EventKapitalRebuild
 from boario.simulation import Simulation
+from boario import logger as lg
+
+logger = logging.getLogger(__name__)
+ch = logging.StreamHandler()
+ch.setLevel(logging.INFO)
+fh = logging.FileHandler(snakemake.log[0])
+fh.setLevel(logging.INFO)
+
+def handle_exception(exc_type, exc_value, exc_traceback):
+    if issubclass(exc_type, KeyboardInterrupt):
+        sys.__excepthook__(exc_type, exc_value, exc_traceback)
+        return
+
+    logger.error(
+        "".join(
+            [
+                "Uncaught exception: ",
+                *traceback.format_exception(exc_type, exc_value, exc_traceback),
+            ]
+        )
+    )
+
+sys.excepthook = handle_exception
 
 logFormatter = logging.Formatter(
     "%(asctime)s [%(levelname)-5.5s] %(name)s %(message)s", datefmt="%H:%M:%S"
 )
-scriptLogger = logging.getLogger("Supchain from Impact")
-consoleHandler = logging.StreamHandler()
-consoleHandler.setFormatter(logFormatter)
-scriptLogger.addHandler(consoleHandler)
-scriptLogger.setLevel(logging.INFO)
+ch.setFormatter(logFormatter)
+fh.setFormatter(logFormatter)
+logger.addHandler(ch)
+logger.addHandler(fh)
+lg.addHandler(fh)
+logger.setLevel(logging.INFO)
 
 
 def simulate(
@@ -50,7 +75,7 @@ def simulate(
     sim = Simulation(
         model,
         register_stocks=False,
-        n_temporal_units_to_sim=int(df_impact.index.max()) + 365,
+        n_temporal_units_to_sim=int(df_impact.index.max()) + 1095,
         separate_sims=False,
     )
 
@@ -65,9 +90,6 @@ def simulate(
                 households_impact=[],
                 occurrence=impact_row.name+1,
                 duration=duration,
-                # TODO: it is assumed that exposure/impacts are expressed with full
-                # values, deal with cases where CLIMADA exposure is expressed in K,
-                # M or Bn
                 event_monetary_factor=1.0,
             )
         ]
@@ -81,9 +103,6 @@ def simulate(
                 households_impact=[],
                 occurrence=ev[0]+1,
                 duration=duration,
-                # TODO: it is assumed that exposure/impacts are expressed with full
-                # values, deal with cases where CLIMADA exposure is expressed in K,
-                # M or Bn
                 event_monetary_factor=1.0,
             )
             for ev in df_impact.iterrows()
@@ -95,6 +114,7 @@ def simulate(
         var_value = getattr(sim, var_name)
         var_value.to_parquet(pathlib.Path(output) / f"{var_name}.parquet")
 
+logger.info("Starting")
 
 with open(snakemake.input.supchain, "rb") as f:
     supchain = pkl.load(f)
@@ -135,3 +155,5 @@ simulate(
     event_id=event_id,
     vars_to_save=snakemake.config["variables"]
 )
+
+logger.info("Finished")
