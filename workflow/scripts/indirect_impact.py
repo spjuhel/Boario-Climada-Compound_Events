@@ -39,7 +39,7 @@ logger.addHandler(ch)
 logger.addHandler(fh)
 lg.addHandler(fh)
 logger.setLevel(logging.INFO)
-
+lg.setLevel(logging.INFO)
 
 def simulate(
     *,
