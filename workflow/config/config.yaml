@@ -3,3 +3,8 @@ variables:
   - final_demand_unmet
 
 step_to_eq: 1825
+inv_sce:
+  - "90-60"
+  - "9-6"
+MRIOT:
+  - "EXIOBASE3-2010"

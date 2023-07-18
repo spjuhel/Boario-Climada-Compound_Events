@@ -40,11 +40,12 @@ def process_impact_df(filepath, n, mriot):
     df_sum['MRIOT'] = mriot
     return df_sum
 
-def process_res_df(filepath, n, mriot, simtype, var):
+def process_res_df(filepath, n, mriot, invtype, simtype, var):
     df = pd.read_parquet(filepath)
     df_sum = (df-df.loc[0]).sum(axis=0).to_frame("total indirect impact")
     df_sum["sample"] = n
     df_sum["MRIOT"] = mriot
+    df_sum["invtype"] = invtype
     df_sum["simtype"]= simtype
     df_sum["variable"] = var
     return df_sum
@@ -54,8 +55,8 @@ import re
 mriots = []
 ns = []
 
-pattern_impact = r"sample_(\d+)/([^/]+)_df_impact.parquet"
-pattern_results = r"sample_(\d+)/([^/]+)_event_(aggregated|separated)/([^/]+)\.parquet"
+pattern_impact = r"sample_(\d+)/([^_]+)_df_impact.parquet"
+pattern_results = r"sample_(\d+)/([^_]+)_([^_]+)_event_(aggregated|separated)/([^/]+)\.parquet"
 regex_impact = re.compile(pattern_impact)
 regex_results = re.compile(pattern_results)
 
@@ -82,9 +83,10 @@ for res_file in snakemake.input.results:
     else:
         n = int(match.group(1))
         mriot = match.group(2)
-        simtype = match.group(3)
-        var = match.group(4)
-        df = process_res_df(res_file, n, mriot, simtype, var)
+        invtype = match.group(3)
+        simtype = match.group(4)
+        var = match.group(5)
+        df = process_res_df(res_file, n, mriot, invtype, simtype, var)
         dfs_res.append(df.reset_index())
 
 meta_df_res = pd.concat(dfs_res, ignore_index=True)
