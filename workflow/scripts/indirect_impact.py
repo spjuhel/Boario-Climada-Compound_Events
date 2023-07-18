@@ -79,7 +79,7 @@ def simulate(
         separate_sims=False,
     )
 
-    if event_id:
+    if event_id is not None:
         impact_row = df_impact.iloc[event_id]
         events_list = [
             EventKapitalRebuild.from_series(
