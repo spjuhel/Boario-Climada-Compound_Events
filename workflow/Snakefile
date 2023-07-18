@@ -159,7 +159,7 @@ def get_all_results(wildcards):
 
 def get_all_impacts_df(wildcards):
     n_samples = glob_wildcards(f"inputs/direct_impacts_yearsets/sample_{{n}}_5y_impact_na_wp.csv").n
-    return expand("outputs/sample_{n}/{mriot}_{inv_sce}_df_impact.parquet", n=n_samples, mriot=config["MRIOT"], inv_sce=config["inv_sce"])
+    return expand("outputs/sample_{n}/{mriot}_df_impact.parquet", n=n_samples, mriot=config["MRIOT"])
 
 rule all_results:
     input:
