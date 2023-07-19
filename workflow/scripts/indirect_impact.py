@@ -154,9 +154,9 @@ simulate(
     df_impact=df_impact,
     reb_sect=reb_sect,
     output=snakemake.output.path,
-    step_to_eq=snakemake.config["step_to_eq"],
+    step_to_eq=snakemake.params.step_to_eq,
     event_id=event_id,
-    vars_to_save=snakemake.config["variables"]
+    vars_to_save=snakemake.params.variables
 )
 
 logger.info("Finished")

@@ -8,3 +8,10 @@ inv_sce:
   - "9-6"
 MRIOT:
   - "EXIOBASE3-2010"
+
+rebuild_tau : 365
+duration: 3
+order_type: "alt"
+alpha_tau: 365
+psi: 0.80
+monetary_factor: 100000

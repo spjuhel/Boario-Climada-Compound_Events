@@ -17,34 +17,6 @@ wildcard_constraints:
     n="\d+",
     mriot_name="EXIOBASE3-2010"
 
-# rule get_hazard_dirimpact:
-#     params:
-#         hazfiles=[
-#             (
-#                 "tropical_cyclone",
-#                 "tropical_cyclone_0synth_tracks_150arcsec_genesis_WP_1980_2020",
-#             ),
-#             (
-#                 "tropical_cyclone",
-#                 "tropical_cyclone_0synth_tracks_150arcsec_genesis_NA_1980_2020",
-#             ),
-#         ],
-#         year_start=2012,
-#         year_end=2017,
-#     log:
-#         "logs/get_hazard_dirimpact.log"
-#     benchmark:
-#         "benchmarks/get_hazard_dirimpact.csv"
-#     resources:
-#         mem_mb=10000
-#     conda:
-#         "envs/climada_env.yml"
-#     output:
-#         save_path="outputs/direct_impact.pkl",
-#         assets="outputs/assets.pkl"
-#     script:
-#         "scripts/hazard.py"
-
 rule impact_csv_csr_to_pkl:
     input:
         csv = "inputs/direct_impacts_yearsets/sample_{n}_5y_impact_na_wp.csv",
@@ -93,12 +65,14 @@ rule simulate:
         sectors_df="inputs/{inv_sce}_sectors_df.parquet",
         df_impact="outputs/sample_{n}/{mriot_name}_df_impact.parquet"
     params:
-        rebuild_tau=365,
-        duration=3,
-        order_type="alt",
-        alpha_tau=365,
-        psi=0.80,
-        monetary_factor=100000,
+        rebuild_tau=config["rebuild_tau"],
+        duration=config["duration"],
+        order_type=config["order_type"],
+        alpha_tau=config["alpha_tau"],
+        psi=config["psi"],
+        monetary_factor=config["monetary_factor"],
+        step_to_eq=config["step_to_eq"],
+        variables=config["variables"]
     wildcard_constraints:
         event_id="aggregated|\d+"
     log:
