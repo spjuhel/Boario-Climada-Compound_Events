@@ -84,11 +84,13 @@ df_impact = pd.DataFrame(
 
 df_impact.index = df_impact.index - df_impact.index.min()
 
+df_impact.to_parquet(snakemake.output.df_impact)
+
 meta_df_impact = df_impact.sum(axis=1).to_frame("total_damage").rename_axis("step").reset_index()
 meta_df_impact["affected"] = df_impact.apply(lambda row:row[row>0].index.get_level_values(0).unique().to_list(), axis=1)
 tmp = (df_impact / supchain.secs_exp.iloc[0]).groupby("region",axis=1).min().stack()
 meta_df_impact["max_shock_intensity"] = tmp.loc[tmp!=0].groupby(level=0).max()
-meta_df_impact["recovery_duration"] = (meta_df_impact["max_shock_intensity"]*100*5000+90).round().astype(int)
+#meta_df_impact["recovery_duration"] = (meta_df_impact["max_shock_intensity"]*100*5000+90).round().astype(int)
 
 with open(snakemake.output.mriot_save,"wb") as f:
     pkl.dump(mriot,f)
