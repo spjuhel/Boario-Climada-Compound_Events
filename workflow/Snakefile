@@ -97,7 +97,6 @@ rule simulate:
         duration=3,
         order_type="alt",
         alpha_tau=365,
-        inv_tau=60,
         psi=0.80,
         monetary_factor=100000,
     wildcard_constraints:

@@ -128,6 +128,7 @@ reb_sect = sectors_df.loc[
     sectors_df.rebuilding_factor > 0, "rebuilding_factor"
 ].to_dict()
 inv_dict = sectors_df.loc[:, "inventory_size"].to_dict()
+inv_tau = sectors_df.loc[:, "inventory_tau"].to_dict()
 
 event_id = snakemake.wildcards.event_id
 if event_id == "aggregated":
@@ -145,7 +146,7 @@ simulate(
     alpha_tau=snakemake.params.alpha_tau,
     monetary_factor=snakemake.params.monetary_factor,
     psi_param=snakemake.params.psi,
-    inventory_restoration_tau=snakemake.params.inv_tau,
+    inventory_restoration_tau=inv_tau,
     duration=snakemake.params.duration,
     mriot=mriot,
     inv_dict=inv_dict,
