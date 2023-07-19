@@ -1,6 +1,12 @@
 variables:
   - production_realised
   - final_demand_unmet
+  - final_demand
+  - rebuild_demand
+  - overproduction
+  - production_capacity
+  - intermediate_demand
+  - limiting_inputs
 
 step_to_eq: 1825
 inv_sce:
