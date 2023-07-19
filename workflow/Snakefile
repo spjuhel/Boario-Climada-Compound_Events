@@ -54,6 +54,7 @@ checkpoint create_supchain:
     output:
         save_path="outputs/sample_{n}/{mriot_name}_supchain.pkl",
         df_impact="outputs/sample_{n}/{mriot_name}_df_impact.parquet",
+        meta_df_impact="outputs/sample_{n}/{mriot_name}_meta_df_impact.parquet",
         mriot_save="outputs/sample_{n}/{mriot_name}.pkl"
     script:
         "scripts/supchain.py"
@@ -63,7 +64,8 @@ rule simulate:
         supchain="outputs/sample_{n}/{mriot_name}_supchain.pkl",
         mriot_file="outputs/sample_{n}/{mriot_name}.pkl",
         sectors_df="inputs/{inv_sce}_sectors_df.parquet",
-        df_impact="outputs/sample_{n}/{mriot_name}_df_impact.parquet"
+        df_impact="outputs/sample_{n}/{mriot_name}_df_impact.parquet",
+        meta_df_impact="outputs/sample_{n}/{mriot_name}_meta_df_impact.parquet",
     params:
         rebuild_tau=config["rebuild_tau"],
         duration=config["duration"],

@@ -2,6 +2,7 @@ from climada_petals.engine import SupplyChain
 import pandas as pd
 import logging
 import pickle as pkl
+import numpy as np
 
 logFormatter = logging.Formatter(
     "%(asctime)s [%(levelname)-5.5s] %(name)s %(message)s", datefmt="%H:%M:%S"
@@ -25,6 +26,8 @@ def load_sectors_aggreg(mrio_name,sectors_common_aggreg):
     else:
         raise ValueError(f"Invalid MRIO name: {mrio_name}")
 
+def shock_economy_share(df_impact, df_assets):
+    return df_impact.apply(lambda row: (row / df_assets), axis=1)
 
 with open(snakemake.input.impact_file,"rb") as f:
     direct_impact = pkl.load(f)
@@ -78,7 +81,14 @@ df_impact = pd.DataFrame(
         columns=supchain.secs_imp.columns,
     index = supchain.events_date
     )
+
 df_impact.index = df_impact.index - df_impact.index.min()
+
+meta_df_impact = df_impact.sum(axis=1).to_frame("total_damage").rename_axis("step").reset_index()
+meta_df_impact["affected"] = df_impact.apply(lambda row:row[row>0].index.get_level_values(0).unique().to_list(), axis=1)
+tmp = (df_impact / supchain.secs_exp.iloc[0]).groupby("region",axis=1).min().stack()
+meta_df_impact["max_shock_intensity"] = tmp.loc[tmp!=0].groupby(level=0).max()
+meta_df_impact["recovery_duration"] = (meta_df_impact["max_shock_intensity"]*100*5000+90).round().astype(int)
 
 with open(snakemake.output.mriot_save,"wb") as f:
     pkl.dump(mriot,f)
@@ -87,3 +97,4 @@ with open(snakemake.output.save_path,"wb") as f:
     pkl.dump(supchain,f)
 
 df_impact.to_parquet(snakemake.output.df_impact)
+meta_df_impact.to_parquet(snakemake.output.meta_df_impact)

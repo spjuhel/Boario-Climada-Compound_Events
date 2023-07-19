@@ -46,13 +46,14 @@ def simulate(
     mriot,
     inv_dict,
     k_vector,
-    rebuild_tau,
+    #rebuild_tau,
     order_type,
     alpha_tau,
     monetary_factor,
     psi_param,
     inventory_restoration_tau,
     df_impact,
+    meta_df_impact,
     reb_sect,
     duration,
     output,
@@ -64,7 +65,7 @@ def simulate(
         mriot,
         order_type=order_type,
         alpha_tau=alpha_tau,
-        rebuild_tau=rebuild_tau,
+        #rebuild_tau=rebuild_tau,
         monetary_factor=monetary_factor,
         inventory_dict=inv_dict,
         productive_capital_vector=k_vector,
@@ -82,11 +83,12 @@ def simulate(
 
     if event_id is not None:
         impact_row = df_impact.iloc[event_id]
+        meta_impact_row = meta_df_impact.iloc[event_id]
         events_list = [
             EventKapitalRebuild.from_series(
                 impact=impact_row,
                 rebuilding_sectors=reb_sect,
-                rebuild_tau=rebuild_tau,
+                rebuild_tau=meta_impact_row["recovery_duration"],
                 rebuilding_factor=1.0,
                 households_impact=[],
                 occurrence=impact_row.name+1,
@@ -99,7 +101,7 @@ def simulate(
             EventKapitalRebuild.from_series(
                 impact=ev[1],
                 rebuilding_sectors=reb_sect,
-                rebuild_tau=rebuild_tau,
+                rebuild_tau=meta_df_impact.loc[ev[0],"recovery_duration"],
                 rebuilding_factor=1.0,
                 households_impact=[],
                 occurrence=ev[0]+1,
@@ -137,11 +139,11 @@ else:
     event_id = int(event_id)
 
 df_impact=pd.read_parquet(snakemake.input.df_impact)
-
+meta_df_impact=pd.read_parquet(snakemake.input.meta_df_impact)
 k_vector = (supchain.secs_exp / supchain.conversion_factor())
 
 simulate(
-    rebuild_tau=snakemake.params.rebuild_tau,
+    #rebuild_tau=snakemake.params.rebuild_tau,
     order_type=snakemake.params.order_type,
     alpha_tau=snakemake.params.alpha_tau,
     monetary_factor=snakemake.params.monetary_factor,
@@ -152,6 +154,7 @@ simulate(
     inv_dict=inv_dict,
     k_vector=k_vector,
     df_impact=df_impact,
+    meta_df_impact=meta_df_impact,
     reb_sect=reb_sect,
     output=snakemake.output.path,
     step_to_eq=snakemake.params.step_to_eq,
