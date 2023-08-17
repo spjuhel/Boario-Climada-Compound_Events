@@ -18,6 +18,7 @@ wildcard_constraints:
     mriot_name="EXIOBASE3-2010"
 
 rule impact_csv_csr_to_pkl:
+    """Read a npz and csv couple and create an Impact object then saved using pickle"""
     input:
         csv = "inputs/direct_impacts_yearsets/sample_{n}_5y_impact_na_wp.csv",
         npz = "inputs/direct_impacts_yearsets/sample_{n}_5y_impact_na_wp.npz",
@@ -36,6 +37,14 @@ rule impact_csv_csr_to_pkl:
         "scripts/yearset_to_pkl.py"
 
 checkpoint create_supchain:
+    """Create a supply chain object (climada), an impact and meta dataframe as well as the IOSystem used.
+
+    Supply chain contains the per region,sector direct impact for the given MRIOT for each events in the impact dataframe. region,sector impacts lower than 'direct_dmg_floor' (snakemake config) are ignored.
+
+    df_impact contains all the retained events. Its index is the step of event occurrence.
+
+    meta_df_impact contains a higher level set of information about the events (total damages, affected regions, shock intensity (as the maximum share of assets destroyed of all affected regions), recovery duration)
+    """
     input:
         impact_file="outputs/sample_{n}/direct_impact.pkl",
         mriot_file="inputs/{mriot_name}/mriot_original.pkl",
@@ -60,6 +69,7 @@ checkpoint create_supchain:
         "scripts/supchain.py"
 
 rule simulate:
+    """run a simulation for an event or a set of events"""
     input:
         supchain="outputs/sample_{n}/{mriot_name}_supchain.pkl",
         mriot_file="outputs/sample_{n}/{mriot_name}.pkl",
@@ -96,6 +106,7 @@ rule simulate:
 
 
 def all_isolate_events(wildcards):
+    """return the list of parquet files of results for all variables for each isolated events run for a given sample, MRIOT, inventory scenario"""
     df_impact = pd.read_parquet(checkpoints.create_supchain.get(**wildcards).output.df_impact).reset_index()
     return (
         expand(
@@ -106,6 +117,7 @@ def all_isolate_events(wildcards):
     )
 
 rule reduce:
+    """Produce the aggregation of all isolated events"""
     input:
         all_isolate_events
     output:
@@ -141,6 +153,7 @@ rule all_results:
         get_all_results
 
 rule meta_df:
+    """Produce the file grouping all results"""
     input:
         results=get_all_results,
         impacts=get_all_impacts_df

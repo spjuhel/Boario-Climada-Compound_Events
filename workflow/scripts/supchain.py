@@ -13,6 +13,22 @@ consoleHandler.setFormatter(logFormatter)
 scriptLogger.addHandler(consoleHandler)
 scriptLogger.setLevel(logging.INFO)
 
+def sigmoid_mapping(value, slope, midpoint,
+                    start_in_intrvl=0, end_in_intrvl=0.005,
+                    start_out_intrvl=-5, end_out_intrvl=5, max_duration=1000):
+    """Map interval to sigmoid scaled interval"""
+    # Map the input value from [start_in, end_in] to [start_out, end_out]
+    normalized_value = (value) / (end_in_intrvl - start_in_intrvl) * (end_out_intrvl - start_out_intrvl) - end_out_intrvl
+
+    # Apply sigmoid function with adjustable slope and midpoint
+    shifted_value = normalized_value - midpoint
+    sigmoid_result = 1 / (1 + math.exp(-slope * shifted_value))
+
+    # Scale the result to [0, max_duration]
+    scaled_result = sigmoid_result * max_duration
+
+    return scaled_result
+
 def load_sectors_aggreg(mrio_name,sectors_common_aggreg):
     mrio_name = mrio_name.casefold()
     if "eora" in mrio_name:
@@ -90,7 +106,8 @@ meta_df_impact = df_impact.sum(axis=1).to_frame("total_damage").rename_axis("ste
 meta_df_impact["affected"] = df_impact.apply(lambda row:row[row>0].index.get_level_values(0).unique().to_list(), axis=1)
 tmp = (df_impact / supchain.secs_exp.iloc[0]).groupby("region",axis=1).min().stack()
 meta_df_impact["max_shock_intensity"] = tmp.loc[tmp!=0].groupby(level=0).max()
-meta_df_impact["recovery_duration"] = (meta_df_impact["max_shock_intensity"]*100*5000+90).round().astype(int)
+meta_df_impact["max_shock_intensity_pct"] = tmp.loc[tmp!=0].groupby(level=0).max()*100
+meta_df_impact["recovery_duration"] = meta_df_impact["max_shock_intensity"].apply(lambda x : sigmoid_mapping(x,slope=2, midpoint=-3.5)).round().astype(int)
 
 with open(snakemake.output.mriot_save,"wb") as f:
     pkl.dump(mriot,f)
