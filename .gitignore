@@ -161,3 +161,7 @@ cython_debug/
 
 .snakemake
 benchmarks/
+outputs/
+tests/
+debugging.ipynb
+dl.sh
