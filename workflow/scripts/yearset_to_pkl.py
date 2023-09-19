@@ -1,6 +1,7 @@
 import sys
 import logging
 import pickle as pkl
+import traceback
 
 from climada.engine import Impact
 from scipy.sparse import csr_matrix
