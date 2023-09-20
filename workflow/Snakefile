@@ -81,7 +81,7 @@ def get_all_supchains(wildcards):
     supchains = expand("outputs/sample_{n}/{mriot}_supchain.pkl", n=n_samples, mriot=config["MRIOT"])
     mriots = expand("outputs/sample_{n}/{mriot}_df_impact.parquet", n=n_samples, mriot=config["MRIOT"])
     df_impact = expand("outputs/sample_{n}/{mriot}_df_impact.parquet", n=n_samples, mriot=config["MRIOT"])
-    meta_df_impact = expand("outputs/sample_{n}/{mriot}_meta_df_impact", n=n_samples, mriot=config["MRIOT"])
+    meta_df_impact = expand("outputs/sample_{n}/{mriot}_meta_df_impact.parquet", n=n_samples, mriot=config["MRIOT"])
     return supchains + mriots + df_impact + meta_df_impact
 
 
