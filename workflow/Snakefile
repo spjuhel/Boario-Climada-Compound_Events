@@ -36,13 +36,13 @@ rule impact_csv_csr_to_pkl:
     script:
         "scripts/yearset_to_pkl.py"
 
-def get_all_results(wildcards):
+def get_all_impacts(wildcards):
     n_samples = glob_wildcards(f"inputs/direct_impacts_yearsets/sample_{{n}}_5y_impact_na_wp.csv").n
     return expand("outputs/sample_{n}/direct_impact.pkl", n=n_samples)
 
 rule all_impact_pkl:
     input:
-        get_all_results
+        get_all_impacts
 
 checkpoint create_supchain:
     """Create a supply chain object (climada), an impact and meta dataframe as well as the IOSystem used.
@@ -75,6 +75,19 @@ checkpoint create_supchain:
         mriot_save="outputs/sample_{n}/{mriot_name}.pkl"
     script:
         "scripts/supchain.py"
+
+def get_all_supchains(wildcards):
+    n_samples = glob_wildcards(f"inputs/direct_impacts_yearsets/sample_{{n}}_5y_impact_na_wp.csv").n
+    supchains = expand("outputs/sample_{n}/{mriot_name}_supchain.pkl", n=n_samples, mriot=config["MRIOT"])
+    mriots = expand("outputs/sample_{n}/{mriot_name}_df_impact.parquet", n=n_samples, mriot=config["MRIOT"])
+    df_impact = expand("outputs/sample_{n}/{mriot_name}_df_impact.parquet", n=n_samples, mriot=config["MRIOT"])
+    meta_df_impact = expand("outputs/sample_{n}/{mriot_name}_meta_df_impact", n=n_samples, mriot=config["MRIOT"], inv_sce=config["inv_sce"], evtype=["aggregated","separated"], var=config["variables"])
+    return supchains + mriots + df_impact + meta_df_impact
+
+
+rule all_supchains_pkl:
+    input:
+        get_all_supchains
 
 rule simulate:
     """run a simulation for an event or a set of events"""
