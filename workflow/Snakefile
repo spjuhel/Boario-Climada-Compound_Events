@@ -15,7 +15,7 @@ configfile: workflow.source_path("config/config.yaml")
 
 wildcard_constraints:
     n="\d+",
-    mriot_name="EXIOBASE3-2010"
+    mriot_name="EXIOBASE3-2010|OECD-2018"
 
 rule impact_csv_csr_to_pkl:
     """Read a npz and csv couple and create an Impact object then saved using pickle"""
