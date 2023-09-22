@@ -39,7 +39,7 @@ def load_sectors_aggreg(mrio_name,sectors_common_aggreg):
     elif "exio" in mrio_name:
         return sectors_common_aggreg["exiobase_full_to_common_aggreg"]
     elif "oecd" in mrio_name:
-        return sectors_common_aggreg["icio2021_reworked_to_common_aggreg"]
+        return sectors_common_aggreg["icio2021_to_common_aggreg"]
     else:
         raise ValueError(f"Invalid MRIO name: {mrio_name}")
 
@@ -61,7 +61,7 @@ for sheet_name in [
         "eora26_without_reexport_to_common_aggreg",
         "euregio_to_common_aggreg",
         "exiobase_full_to_common_aggreg",
-        "icio2021_reworked_to_common_aggreg",
+        "icio2021_to_common_aggreg",
 ]
 }
 
@@ -107,9 +107,9 @@ df_impact.to_parquet(snakemake.output.df_impact)
 meta_df_impact = df_impact.sum(axis=1).to_frame("total_damage").rename_axis("step")#.reset_index()
 meta_df_impact["affected"] = df_impact.apply(lambda row:row[row>0].index.get_level_values(0).unique().to_list(), axis=1)
 tmp = (df_impact / supchain.secs_exp.iloc[0]).groupby("region",axis=1).min().stack()
-meta_df_impact["max_shock_intensity"] = tmp.loc[tmp!=0].groupby(level=0).max()
-meta_df_impact["max_shock_intensity_pct"] = tmp.loc[tmp!=0].groupby(level=0).max()*100
-meta_df_impact["recovery_duration"] = meta_df_impact["max_shock_intensity"].apply(lambda x : sigmoid_mapping(x,slope=2, midpoint=-3.5)).round().astype(int)
+meta_df_impact["mean_shock_intensity"] = tmp.loc[tmp!=0].groupby(level=0).mean()
+meta_df_impact["mean_shock_intensity_pct"] = meta_df_impact["mean_shock_intensity"] * 100
+meta_df_impact["recovery_duration"] = meta_df_impact["mean_shock_intensity"].apply(lambda x : sigmoid_mapping(x,slope=2, midpoint=-3.5)).round().astype(int)
 
 with open(snakemake.output.mriot_save,"wb") as f:
     pkl.dump(mriot,f)

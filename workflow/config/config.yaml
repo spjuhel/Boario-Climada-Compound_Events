@@ -7,7 +7,7 @@ inv_sce:
   - "90-60"
   - "9-6"
 MRIOT:
-  - "EXIOBASE3-2010"
+  - "OECD-2018"
 
 rebuild_tau : 365
 duration: 3
