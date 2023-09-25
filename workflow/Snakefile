@@ -27,8 +27,8 @@ rule impact_csv_csr_to_pkl:
         pkl = "outputs/sample_{n}/direct_impact.pkl",
     log:
         "logs/yearsets_{n}_impacts_to_pkl.log"
-    benchmark:
-        "benchmarks/yearsets_{n}_impacts_to_pkl.csv"
+    # benchmark:
+        # "benchmarks/yearsets_{n}_impacts_to_pkl.csv"
     resources:
         mem_mb= 10000
     conda:
@@ -62,8 +62,8 @@ checkpoint create_supchain:
         direct_dmg_floor=1e8,
     log:
         "logs/create_supchain/{n}_{mriot_name}.log"
-    benchmark:
-        "benchmarks/create_supchain/{n}_{mriot_name}.csv"
+    # benchmark:
+        # "benchmarks/create_supchain/{n}_{mriot_name}.csv"
     resources:
         mem_mb=12000
     conda:
@@ -110,8 +110,8 @@ rule simulate:
         event_id="aggregated|\d+"
     log:
         "logs/simulate/{n}_{mriot_name}_{inv_sce}_{event_id}.log"
-    benchmark:
-        "benchmarks/simulate/{n}_{mriot_name}_{inv_sce}_{event_id}.csv"
+    # benchmark:
+        # "benchmarks/simulate/{n}_{mriot_name}_{inv_sce}_{event_id}.csv"
     resources:
         mem_mb=6000
     conda:
@@ -150,8 +150,8 @@ rule reduce:
         mem_mb=1000*len(config["variables"]),
     log:
         "logs/reduce/{n}_{mriot_name}_{inv_sce}.log"
-    benchmark:
-        "benchmarks/reduce/{n}_{mriot_name}_{inv_sce}.log"
+    # benchmark:
+        # "benchmarks/reduce/{n}_{mriot_name}_{inv_sce}.log"
     run:
         structured_results = { var: [pd.read_parquet(isolate) for isolate in input if var in isolate] for var in config["variables"] }
         for var, group in structured_results.items():
@@ -184,7 +184,7 @@ rule meta_df:
         mem_mb=6000,
     log:
         "logs/meta_df.log"
-    benchmark:
-        "benchmarks/meta_df.csv"
+    # benchmark:
+        # "benchmarks/meta_df.csv"
     script:
         "scripts/meta_df_building.py"
