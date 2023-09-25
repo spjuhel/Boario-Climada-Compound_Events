@@ -8,6 +8,8 @@ from boario.event import EventKapitalRebuild
 from boario.simulation import Simulation
 from boario import logger as lg
 
+import traceback
+
 logger = logging.getLogger(__name__)
 ch = logging.StreamHandler()
 ch.setLevel(logging.INFO)

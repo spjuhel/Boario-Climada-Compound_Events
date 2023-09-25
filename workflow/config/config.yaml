@@ -11,7 +11,7 @@ MRIOT:
 
 rebuild_tau : 365
 duration: 3
-order_type: "alt"
+order_type: "noalt"
 alpha_tau: 365
 psi: 0.80
 monetary_factor: 1000000
