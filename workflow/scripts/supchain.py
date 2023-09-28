@@ -77,6 +77,12 @@ if "EXIOBASE3" in mriot.meta.name:
     agg_regions = [rg if rg not in ['WA', 'WE',  'WF',  'WL',  'WM'] else "ROW" for rg in reg]
     mriot = mriot.aggregate(region_agg = agg_regions)
 
+if "EXIOBASE3" in mriot.meta.name:
+    EU_regs_exio = ["AT","BE","BG","CH","DE","DK","EE","ES","FI","FR","GB","GR","HR","HU","IE","IT","LT","LU","LV","MT","NL","NO","PL","PT","RO","SE","SI","SK"]
+
+if "OECD21" in mriot.meta.name:
+    EU_regs_wiod = ["AUT","BEL","BGR","CHE","DEU","DNK","EST","ESP","FIN","FRA","GBR","GRC","HRV","HUN","IRL","ITA","LTU","LUX","LVA","MLT","NLD","NOR","POL","PRT","ROU","SWE","SVN","SVK"]
+
 mriot.reset_all_full()
 mriot.calc_all()
 
@@ -101,6 +107,7 @@ df_impact = pd.DataFrame(
 
 df_impact.index = df_impact.index - df_impact.index.min()
 df_impact = df_impact.groupby(df_impact.index).sum()
+df_impact.loc[:,EU_regs] = 0
 
 df_impact.to_parquet(snakemake.output.df_impact)
 
