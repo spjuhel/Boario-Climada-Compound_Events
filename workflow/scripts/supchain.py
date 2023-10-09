@@ -108,6 +108,7 @@ df_impact = pd.DataFrame(
 df_impact.index = df_impact.index - df_impact.index.min()
 df_impact = df_impact.groupby(df_impact.index).sum()
 df_impact[EU_regs]= 0
+df_impact = df_impact[(df_impact!=0).any(axis=1)]
 
 df_impact.to_parquet(snakemake.output.df_impact)
 
