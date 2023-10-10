@@ -108,6 +108,7 @@ df_impact = pd.DataFrame(
 df_impact.index = df_impact.index - df_impact.index.min()
 df_impact = df_impact.groupby(df_impact.index).sum()
 df_impact[EU_regs]= 0
+df_impact = df_impact[~(df_impact < (10 / 1)).all(axis=1)]
 df_impact = df_impact[(df_impact!=0).any(axis=1)]
 
 df_impact.to_parquet(snakemake.output.df_impact)
@@ -125,5 +126,5 @@ with open(snakemake.output.mriot_save,"wb") as f:
 with open(snakemake.output.save_path,"wb") as f:
     pkl.dump(supchain,f)
 
-df_impact.to_parquet(snakemake.output.df_impact)
+#df_impact.to_parquet(snakemake.output.df_impact)
 meta_df_impact.to_parquet(snakemake.output.meta_df_impact)
