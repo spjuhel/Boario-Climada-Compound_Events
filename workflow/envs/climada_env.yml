@@ -39,6 +39,7 @@ dependencies:
   - xlrd>=1.2
   - xlsxwriter>=1.3
   - xmlrunner>=1.7
+  - xyzservices<2023.10.1
   - git
   - pip:
       - deprecation>=2.1
@@ -47,5 +48,5 @@ dependencies:
       - pybufrkit>=0.2
       - SALib==1.3.12
       - boario
-      - "--editable=git+https://github.com/CLIMADA-project/climada_python.git@develop#egg=climada"
-      - "--editable=git+https://github.com/CLIMADA-project/climada_petals.git@feature/climada_boario#egg=climada-petals"
+      - "--editable=git+https://github.com/CLIMADA-project/climada_python.git@178e62450284ae763e029b5c39780bf8eaf9d489#egg=climada"
+      - "--editable=git+https://github.com/CLIMADA-project/climada_petals.git@19387b12c70be4741579f2d289b559ccd617b34b#egg=climada-petals"
