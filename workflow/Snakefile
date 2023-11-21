@@ -101,6 +101,7 @@ rule simulate:
         rebuild_tau=config["rebuild_tau"],
         duration=config["duration"],
         order_type=config["order_type"],
+        alpha_max=config["alpha_max"],
         alpha_tau=config["alpha_tau"],
         psi=config["psi"],
         monetary_factor=config["monetary_factor"],
