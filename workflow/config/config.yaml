@@ -16,3 +16,4 @@ alpha_max: 1
 alpha_tau: 365
 psi: 0.80
 monetary_factor: 1000000
+aggregate_mriot: True
