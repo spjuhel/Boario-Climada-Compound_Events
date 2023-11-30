@@ -150,7 +150,8 @@ rule reduce:
             variable=config["variables"],
         ),
     resources:
-        mem_mb=1000*len(config["variables"]),
+        mem_mb=10000*len(config["variables"]),
+        time=600
     log:
         "logs/reduce/{n}_{mriot_name}_{inv_sce}.log"
     # benchmark:
