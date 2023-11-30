@@ -115,6 +115,7 @@ rule simulate:
         # "benchmarks/simulate/{n}_{mriot_name}_{inv_sce}_{event_id}.csv"
     resources:
         mem_mb=72000,
+        time="10h",
         runtime="10h"
     conda:
         "envs/climada_env.yml"
