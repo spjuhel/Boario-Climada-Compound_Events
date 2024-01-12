@@ -55,20 +55,20 @@ with open(snakemake.input.mriot_file,"rb") as f:
 with open(snakemake.input.assets,"rb") as f:
     assets = pkl.load(f)
 
-if snakemake.config["aggregate_mriot"]:
-    sectors_common_aggreg = {
-        sheet_name: pd.read_excel(snakemake.params.sector_common_aggreg, sheet_name=sheet_name, index_col=0)
-        for sheet_name in [
-                "eora26_without_reexport_to_common_aggreg",
-                "euregio_to_common_aggreg",
-                "exiobase_full_to_common_aggreg",
-                "icio2021_to_common_aggreg",
-        ]
-    }
-    df_aggreg = load_sectors_aggreg(mriot.name, sectors_common_aggreg)
+# if snakemake.config["aggregate_mriot"]:
+#     sectors_common_aggreg = {
+#         sheet_name: pd.read_excel(snakemake.params.sector_common_aggreg, sheet_name=sheet_name, index_col=0)
+#         for sheet_name in [
+#                 "eora26_without_reexport_to_common_aggreg",
+#                 "euregio_to_common_aggreg",
+#                 "exiobase_full_to_common_aggreg",
+#                 "icio2021_to_common_aggreg",
+#         ]
+#     }
+#     df_aggreg = load_sectors_aggreg(mriot.name, sectors_common_aggreg)
 
-    mriot.rename_sectors(df_aggreg["new sector"].to_dict())
-    mriot.aggregate_duplicates()
+#     mriot.rename_sectors(df_aggreg["new sector"].to_dict())
+#     mriot.aggregate_duplicates()
 
 mriot.meta.change_meta("name", snakemake.wildcards.mriot_name)
 

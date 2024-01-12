@@ -128,6 +128,22 @@ with open(snakemake.input.supchain, "rb") as f:
 with open(snakemake.input.mriot_file, "rb") as f:
     mriot = pkl.load(f)
 
+
+if snakemake.config["aggregate_mriot"]:
+    sectors_common_aggreg = {
+        sheet_name: pd.read_excel(snakemake.params.sector_common_aggreg, sheet_name=sheet_name, index_col=0)
+        for sheet_name in [
+                "eora26_without_reexport_to_common_aggreg",
+                "euregio_to_common_aggreg",
+                "exiobase_full_to_common_aggreg",
+                "icio2021_to_common_aggreg",
+        ]
+    }
+    df_aggreg = load_sectors_aggreg(mriot.name, sectors_common_aggreg)
+
+    mriot.rename_sectors(df_aggreg["new sector"].to_dict())
+    mriot.aggregate_duplicates()
+
 sectors_df = pd.read_parquet(snakemake.input.sectors_df)
 reb_sect = sectors_df.loc[
     sectors_df.rebuilding_factor > 0, "rebuilding_factor"
@@ -141,9 +157,17 @@ if event_id == "aggregated":
 else:
     event_id = int(event_id)
 
-df_impact=pd.read_parquet(snakemake.input.df_impact)
 meta_df_impact=pd.read_parquet(snakemake.input.meta_df_impact)
+
+df_impact=pd.read_parquet(snakemake.input.df_impact)
 k_vector = (supchain.secs_exp / supchain.conversion_factor())
+
+if snakemake.config["aggregate_mriot"]:
+    df_impact = df_impact.rename(df_aggreg["new sector"].to_dict(), axis=1, level=1)
+    df_impact = df_impact.T.groupby(['region','sector']).sum().T
+
+    k_vector = k_vector.rename(df_aggreg["new sector"].to_dict(), axis=1, level=1)
+    k_vector = k_vector.T.groupby(['region','sector']).sum().T
 
 simulate(
     #rebuild_tau=snakemake.params.rebuild_tau,
