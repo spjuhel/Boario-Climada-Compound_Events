@@ -30,6 +30,19 @@ def handle_exception(exc_type, exc_value, exc_traceback):
         )
     )
 
+def load_sectors_aggreg(mrio_name,sectors_common_aggreg):
+    mrio_name = mrio_name.casefold()
+    if "eora" in mrio_name:
+        return sectors_common_aggreg["eora26_without_reexport_to_common_aggreg"]
+    elif "euregio" in mrio_name:
+        return sectors_common_aggreg["euregio_to_common_aggreg"]
+    elif "exio" in mrio_name:
+        return sectors_common_aggreg["exiobase_full_to_common_aggreg"]
+    elif "oecd" in mrio_name:
+        return sectors_common_aggreg["icio2021_to_common_aggreg"]
+    else:
+        raise ValueError(f"Invalid MRIO name: {mrio_name}")
+
 sys.excepthook = handle_exception
 
 logFormatter = logging.Formatter(
