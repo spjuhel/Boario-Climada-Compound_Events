@@ -156,6 +156,7 @@ if snakemake.config["aggregate_mriot"]:
 
     mriot.rename_sectors(df_aggreg["new sector"].to_dict())
     mriot.aggregate_duplicates()
+    mriot.calc_all()
 
 sectors_df = pd.read_parquet(snakemake.input.sectors_df)
 reb_sect = sectors_df.loc[
