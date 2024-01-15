@@ -98,6 +98,7 @@ rule simulate:
         df_impact="outputs/sample_{n}/{mriot_name}_df_impact.parquet",
         meta_df_impact="outputs/sample_{n}/{mriot_name}_meta_df_impact.parquet",
     params:
+        sector_common_aggreg="inputs/sectors_common_aggreg.ods",
         rebuild_tau=config["rebuild_tau"],
         duration=config["duration"],
         order_type=config["order_type"],
